@@ -1,139 +1,164 @@
-# ExplainMyError
+# ExplainMyLog
 
-**Understand errors. Fix faster.**
+**ExplainMyLog** helps developers understand noisy application logs by summarizing what happened, identifying where things likely went wrong, and suggesting the first thing to check.
 
-ExplainMyError is a small developer tool that explains common error messages and stack traces in plain English.  
-It helps developers quickly understand *what an error means*, *why it usually happens*, and *what to check first* — without digging through docs or forums.
-
----
-
-## ✨ What ExplainMyError Does
-
-- Accepts error messages or stack traces
-- Explains the error in simple, human-readable terms
-- Highlights the most likely cause
-- Suggests the first thing to check
-- Clearly communicates uncertainty when context is limited
-
-This is a **best-effort explanation tool**, not a debugger or code fixer.
+It is designed to **reduce cognitive overload**, not to debug or fix issues automatically.
 
 ---
 
-## 👨‍💻 Who Is This For?
+##  Problem
 
-- Frontend developers (Angular, JavaScript, etc.)
-- Backend developers (Node.js and general errors)
-- Anyone who wants quick clarity on confusing error messages
+Application logs are often:
+- Extremely noisy
+- Hard to scan under pressure
+- Filled with irrelevant information
+- Difficult to summarize quickly
 
----
+Developers frequently paste logs into Slack, Jira, or GitHub issues just to ask:
 
-## ❌ What This Tool Does NOT Do
+> “What actually went wrong here?”
 
-- It does **not** fix your code
-- It does **not** guarantee correctness
-- It does **not** replace debugging or testing
-- It does **not** generate code
-
-Explanations are based on common patterns and limited context.
+ExplainMyLog exists to answer that question clearly.
 
 ---
 
-## 🛠️ Tech Stack
+##  What ExplainMyLog Does
 
-- **Frontend:** Angular + Tailwind CSS
-- **Backend:** Node.js + Express
-- **AI:** OpenAI API
-- **Architecture:** Service-oriented backend with strict AI output contracts
-
----
-
-## 🚀 Running the Project Locally
-
-### Prerequisites
-- Node.js (v18+ recommended)
-- An OpenAI API key
+- Accepts raw application logs (any format)
+- Optionally accepts a high-level context (Backend, Frontend, CI, etc.)
+- Produces a **structured explanation**:
+  - What happened
+  - Key events
+  - Likely failure point
+  - First thing to investigate
+- Admits uncertainty when logs are insufficient
+- Never generates code or guesses missing information
 
 ---
 
-### 1️⃣ Backend Setup
+##  What ExplainMyLog Does NOT Do
 
+This is intentional.
+
+ExplainMyLog does **not**:
+- Parse logs structurally
+- Identify exact root causes
+- Highlight specific line numbers
+- Fix bugs or generate code
+- Store or persist logs
+- Accept file uploads
+- Handle multiple inputs
+- Guarantee correctness
+
+It focuses on **clarity**, not authority.
+
+---
+
+##  How It Works
+
+1. Developer pastes logs into the UI
+2. Optional context is selected
+3. Logs are sent to the backend API
+4. An AI model summarizes the logs using strict rules
+5. The frontend renders the explanation clearly
+
+The AI is constrained to return predictable, structured JSON.
+
+---
+
+##  Output Format
+
+ExplainMyLog always returns the following fields:
+
+- **Summary** – High-level explanation of what happened
+- **Timeline** – Key events in order
+- **Failure Point** – Where the issue likely occurred
+- **Next Step** – First thing the developer should check
+
+Empty values are returned if information is insufficient.
+
+---
+
+##  Context Options
+
+The context dropdown biases interpretation but does not enforce assumptions.
+
+Available contexts:
+- Backend / API
+- Frontend
+- Database
+- Infrastructure / Server
+- CI / Build
+- Other / Not sure
+
+Default: **Backend / API**
+
+---
+
+##  Tech Stack
+
+### Frontend
+- Angular (standalone components)
+- Tailwind CSS
+- Single-page layout
+
+### Backend
+- Node.js
+- Express
+- OpenAI API
+- Environment-based configuration
+
+---
+
+##  Local Setup
+
+### Backend
 - cd Backend
 - npm install
+- npm run dev
 
-### Create a .env file inside the Backend folder:
-
-- OPENAI_API_KEY=your_openai_api_key_here
-
-### Start the backend server:
-
-- node src/index.js
-
-### Backend runs at:
-
-- http://localhost:3000
-
-### Health check:
-
-- GET /health
-
-### 2️⃣ Frontend Setup
+### Frontend
 - cd Frontend/explain-my-error-ui
 - npm install
 - ng serve
 
 
-### Frontend runs at:
+---
 
-- http://localhost:4200
+## Testing
+
+Manual testing scenarios:
+- Small, clear logs
+- Large, noisy logs
+- Garbage or insufficient input
+- Backend unavailable
+- Repeated submissions
+
+Expected behavior:
+- No crashes
+- Calm error messages
+- Honest uncertainty
+- Predictable output structure
 
 ---
 
-## 📡 API Reference
+## Success Criteria
 
-- POST /api/explain-error
-
-- Request body:
-
-{
-  "errorText": "Cannot read properties of undefined (reading 'map')",
-  "framework": "Angular"
-}
-
-
-- Success response:
-
-{
-  "meaning": "Plain-English explanation of the error",
-  "cause": "Most likely reason the error occurs",
-  "check": "First thing the developer should check",
-  "mistake": "Common mistake related to this error"
-}
-
-
-- Error response:
-
-{
-  "error": "Could not explain this error."
-}
+ExplainMyLog is successful if:
+- Developers feel less overwhelmed
+- Logs become understandable faster
+- Output feels helpful even when imperfect
+- Trust is maintained through honesty and guardrails
 
 ---
 
-### ⚠️ Important Notes
+## Philosophy
 
-- Short or vague error messages may result in limited explanations
-- AI failures and network issues are handled gracefully
-- No internal stack traces or backend errors are exposed to users
+ExplainMyLog is designed to help developers understand, not to automate decisions.
 
----
+- Clarity beats confidence.
+- Honesty beats cleverness.
 
-### 🎯 Why This Project Exists
-
-#### ExplainMyError is part of a series of small AI-first MVPs built to focus on:
-- Safe AI integration
-- Prompt discipline and output validation
-- Clear UX for uncertainty
-- SaaS-ready backend architecture
-- The goal is clarity and trust — not hype.
 
 ---
 
