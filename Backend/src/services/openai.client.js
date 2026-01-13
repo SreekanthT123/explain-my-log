@@ -1,0 +1,17 @@
+import OpenAI from "openai";
+
+let client = null;
+
+export function getOpenAIClient() {
+  if (!process.env.OPENAI_API_KEY) {
+    throw new Error("OPENAI_API_KEY is missing");
+  }
+
+  if (!client) {
+    client = new OpenAI({
+      apikey: process.env.OPENAI_API_KEY,
+    });
+  }
+
+  return client;
+}

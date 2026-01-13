@@ -1,0 +1,22 @@
+<div class="w-screen flex justify-start items-center gap-2 px-4 h-[48px]">
+  <div>
+    <img src="logo1.svg" alt="" />
+  </div>
+  <div>
+    <div class="text-base font-semibold">
+      ExplainMy<span class="text-[#F5702F]">Log</span>
+    </div>
+    <div class="text-xs">
+      <!-- Understand errors.<span class="text-[#329253]">Fix faster.</span> -->
+      Understand noisy<span class="text-[#329253]"> application logs</span> quickly.
+    </div>
+  </div>
+</div>
+<div class="h-[calc(100vh-48px)] w-screen flex flex-col lg:flex-row">
+  <div class="w-full lg:w-1/2 border-r p-4">
+    <app-log-input (submitLogs)="onSubmit($event)" [isLoading]="loading"></app-log-input>
+  </div>
+  <div class="w-full lg:w-1/2 border-r p-4">
+    <app-log-output [error]="error" [isLoading]="loading" [result]="result"></app-log-output>
+  </div>
+</div>
